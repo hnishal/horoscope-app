@@ -14,9 +14,10 @@ class _HomePageState extends State<HomePage> {
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate, // Refer step 1
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
+      initialDate: selectedDate,
+      firstDate: DateTime(1921),
+      lastDate: DateTime.now(),
+      helpText: 'Select Date of birth',
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -45,61 +46,66 @@ class _HomePageState extends State<HomePage> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          //mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                margin: EdgeInsets.only(bottom: 16, left: 10, right: 10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: Image(
-                    image: AssetImage('images/main.jpg'),
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.cover,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/nebulaa.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  margin: EdgeInsets.only(bottom: 16, left: 10, right: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image(
+                      image: AssetImage('images/zodiac.png'),
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+              Text(
+                "",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              ElevatedButton(
+                onPressed: () => _selectDate(context), // Refer step 3
+                child: Text(
+                  'Date of Birth',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                )),
-            Text(
-              "",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                ElevatedButton(
-                  onPressed: () => _selectDate(context), // Refer step 3
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HoroscopePage(
+                                  selectedDate: selectedDate,
+                                )));
+                  },
                   child: Text(
-                    'Date of Birth',
+                    'Check Zodiac Sign',
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HoroscopePage(
-                                    selectedDate: selectedDate,
-                                  )));
-                    },
-                    child: Text(
-                      'Check Zodiac Sign',
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    )),
-              ],
-            )
-          ],
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  )),
+            ],
+          ),
         ),
       ),
     );
